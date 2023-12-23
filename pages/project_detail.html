@@ -1,0 +1,71 @@
+{% extends 'adminlte/base.html' %}
+{% block content %}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Releases do Projeto: {{ project.name }}</h2>
+          </div>
+          <div class="card-body">
+            {% if releases %}
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Versão</th>
+                    <th>Descrição</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for release in releases %}
+                    <tr>
+                      <td>{{ release.id }}</td>
+                      <td>{{ release.version }}</td>
+                      <td>{{ release.description }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            {% else %}
+              <p>Nenhuma release encontrada para este projeto.</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Casos de Teste do Projeto: {{ project.name }}</h2>
+          </div>
+          <div class="card-body">
+            {% if test_cases %}
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <!-- Adicione mais colunas conforme necessário -->
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for test_case in test_cases %}
+                    <tr>
+                      <td>{{ test_case.id }}</td>
+                      <td>{{ test_case.title }}</td>
+                      <!-- Adicione mais colunas conforme necessário -->
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            {% else %}
+              <p>Nenhum caso de teste encontrado para este projeto.</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

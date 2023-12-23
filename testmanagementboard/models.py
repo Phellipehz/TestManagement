@@ -13,6 +13,8 @@ class UploadFile(models.Model):
 class Project(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
+    releases = models.ManyToManyField('Release', blank=True, related_name='project_releases')
+    test_cases = models.ManyToManyField('TestCase', blank=True, related_name='project_test_cases')
 
     def __str__(self):
         return self.name
@@ -42,6 +44,8 @@ class TestCase(models.Model):
         ('LOW', 'Low')
     ]
 
+    id = models.AutoField(primary_key=True)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
     title = models.TextField()
     description = models.TextField()
     pre_conditions = models.TextField(blank=True, null=True)
@@ -74,8 +78,8 @@ class Release(models.Model):
     finishing_date = models.DateTimeField(auto_now_add=False)
     created_at = models.DateTimeField(auto_now_add=True)
     id = models.AutoField(primary_key=True)
+    version = models.TextField(default="")
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    # Casos de Testes selecionados para execução
     test_suite = models.ManyToManyField(TestCase, related_name='release_test_suite')
 
     def __str__(self):
@@ -95,19 +99,25 @@ class Defect(models.Model):
         ('CLOSED', 'Closed'),
     ]
 
+    id = models.AutoField(primary_key=True)
     release = models.ForeignKey(Release, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     description = models.TextField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
     last_update_at = models.DateTimeField(auto_now=True)
-    test_steps = models.ManyToManyField(DefectReplicationStep, related_name='defect_steps')
+    test_replication_steps = models.ManyToManyField(DefectReplicationStep, related_name='defect_steps', blank=True, null=True)
+    test_step = models.ManyToManyField(TestStep, related_name='broken_test_step', blank=True, null=True)
+
+    def __str__(self):
+        return self.title
 
 
 class TestCaseExecution(models.Model):
     STATUS_CHOICES = [
         ('SUCCESS', 'Success'),
         ('FAIL', 'Fail'),
+        ('ON_GOING', 'On Going'),
     ]
     release = models.ForeignKey(Release, on_delete=models.CASCADE)
     test_case = models.ForeignKey(TestCase, on_delete=models.CASCADE)
@@ -118,8 +128,9 @@ class TestStepExecution(models.Model):
     STATUS_CHOICES = [
         ('SUCCESS', 'Success'),
         ('FAIL', 'Fail'),
+        ('ON_GOING', 'On Going'),
     ]
     step = models.ForeignKey('TestStep', on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES)
-    description = models.TextField(default="")
-    attachment = models.ForeignKey(UploadFile, on_delete=models.CASCADE)
+    defect = models.ForeignKey('Defect', on_delete=models.CASCADE, blank=True, null=True)
+
