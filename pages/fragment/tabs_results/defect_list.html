@@ -1,0 +1,21 @@
+
+    <table class="striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Título</th>
+          <th>Estado</th>
+          <th>Ação</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for testcase in testcases %}
+          <tr>
+            <td>{{ testcase.id }}</td>
+            <td>{{ testcase.title }}</td>
+            <td>{{ testcase.state }}</td>
+            <td><a href="testcases/{{testcase.id}}">Detalhes</a></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>

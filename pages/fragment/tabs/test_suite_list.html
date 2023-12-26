@@ -1,0 +1,24 @@
+
+    <table class="striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Título</th>
+          <th>Prioridade</th>
+          <th>Ação</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for testsuite in testsuites %}
+          <tr>
+            <td>{{ testsuite.id }}</td>
+            <td>{{ testsuite.title }}</td>
+            <td>{{ testsuite.priority }}</td>
+            <td>
+              <a href="/admin/testmanagementboard/testsuite/{{testsuite.id}}/change/">Editar</a> |
+              <a href="/testsuite/{{testsuite.id}}">Visualizar</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>

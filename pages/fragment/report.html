@@ -1,0 +1,39 @@
+<!---
+- Defeitos
+- Casos de teste executados numa execution
+-->
+
+{% block content %}
+    <div class="container">
+        <div class="card" style="margin-top: 3%;">
+            <div class="card-content">
+            <form method="post" action="{% url 'index' %}">
+                {% csrf_token %}
+                <div class="input-field">
+                    <select name="project" onchange="window.location.href=this.value">
+                      <option value="" selected disabled>Select an execution</option>
+                      {% for testexecution in testexecutions %}
+                        <option value="?testexecution={{ testexecution.id }}#report">Execution #{{ testexecution.id }}</option>
+                      {% endfor %}
+                    </select>
+                    <label>Select an execution</label>
+                </div>
+            </form>
+            </div>
+            <div class="card-tabs">
+              <ul class="tabs tabs-fixed-width">
+                <li class="tab"><a href="#report-defeitos">Defeitos</a></li>
+                <li class="tab"><a href="#report-test-case">Casos de Teste Executados</a></li>
+              </ul>
+            </div>
+            <div class="card-content grey lighten-4">
+              <div id="report-defeitos">
+                Defeitos
+              </div>
+              <div id="report-test-case">
+                  Casos de Teste Executados
+              </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

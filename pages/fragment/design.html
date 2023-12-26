@@ -1,0 +1,31 @@
+
+{% block content %}
+    <div class="container">
+        <div class="card" style="margin-top: 3%;">
+            <div class="card-content">
+              <span class="card-title">{{project.name}}</span>
+              <p>{{project.description}}</p>
+            </div>
+            <div class="card-tabs">
+              <ul class="tabs tabs-fixed-width">
+                <li class="tab"><a href="#testcases">Casos de Teste</a></li>
+                <li class="tab"><a href="#testsuites">Suites de Testes</a></li>
+                <li class="tab"><a href="#testplans">Planos de Testes</a></li>
+              </ul>
+            </div>
+            <div class="card-content grey lighten-4">
+              <div id="testcases">
+                {% include 'fragment/tabs/test_case_list.html' %}
+              </div>
+              <div id="testsuites">
+                {% include 'fragment/tabs/test_suite_list.html' %}
+              </div>
+              <div id="testplans">
+                {% include 'fragment/tabs/test_plan_list.html' %}
+              </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

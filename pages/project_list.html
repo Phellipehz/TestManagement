@@ -1,24 +1,30 @@
-{% extends 'adminlte/base.html' %}
-{% block content %}
+{% extends 'base.html' %}
 
-    <div class="container-fluid">
-      <div class="row">
-        {% for project in projects %}
-          <div class="col-md-4">
-            <div class="card card-primary card-outline">
-              <div class="card-header">
-                <h3 class="card-title">{{ project.name }}</h3>
-              </div>
-              <div class="card-body">
-                <p>{{ project.description }}</p>
-              </div>
-              <div class="card-footer">
-                <a class="btn btn-primary">Detalhes</a>
-              </div>
-            </div>
-          </div>
-        {% endfor %}
+{% block content %}
+    <div class="container">
+      <a href="/admin/testmanagementboard/project/add/" class="waves-effect waves-light btn-small">Criar projeto</a>
+      <div class="card" style="margin-top: 3%;">
+          <table class="striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Descrição</th>
+                <th>Ação</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for project in projects %}
+                <tr>
+                  <td style="margin-left: 20px;">{{ project.id }}</td>
+                  <td>{{ project.name }}</td>
+                  <td>{{ project.description }}</td>
+                  <td><a href="projects/{{project.id}}">Visualizar</a></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+
       </div>
     </div>
-
 {% endblock %}

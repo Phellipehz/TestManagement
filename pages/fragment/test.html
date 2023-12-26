@@ -1,0 +1,47 @@
+<!---
+- Lista de casos de teste para executar e marcar sucesso ou falha
+- Reporta defeitos
+-->
+
+{% block content %}
+ <div class="container">
+        <div class="card" style="margin-top: 3%;">
+            <div class="card-content">
+            <form method="post" action="{% url 'index' %}">
+                {% csrf_token %}
+                <div class="input-field">
+                    <select name="project" onchange="window.location.href=this.value">
+                      <option value="" selected disabled>Select an execution</option>
+                      {% for testexecution in testexecutions %}
+                        <option value="?testexecution={{ testexecution.id }}#test">Execution #{{ testexecution.id }}</option>
+                      {% endfor %}
+                    </select>
+                    <label>Select an execution</label>
+                </div>
+            </form>
+            </div>
+            <div class="card-content grey lighten-4">
+            <table class="striped">
+                <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Suite / Título</th>
+                      <th>Estado</th>
+                      <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for testcase in testcases %}
+                      <tr>
+                        <td>{{ testcase.id }}</td>
+                        <td>{{ testcase.suite.title }} - {{ testcase.title }} - {{ testcase.type }}</td>
+                        <td>{{ testcase.state }}</td>
+                        <td><a href="#" onclick="executarTestCase({{ testcase.id }})">Executar</a></td>
+                      </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

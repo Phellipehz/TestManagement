@@ -1,0 +1,27 @@
+
+    <table class="striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Suite</th>
+          <th>Título</th>
+          <th>Tipo</th>
+          <th>Estado</th>
+          <th>Prioridade</th>
+          <th>Ação</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for testcase in testcases %}
+          <tr>
+            <td>{{ testcase.id }}</td>
+            <td>{{ testcase.suite.title }}</td>
+            <td>{{ testcase.title }}</td>
+            <td>{{ testcase.state }}</td>
+            <td>{{ testcase.priority }}</td>
+            <td>{{ testcase.type }}</td>
+            <td><a href="/admin/testmanagementboard/testcase/{{testcase.id}}/change/">Editar</a></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
